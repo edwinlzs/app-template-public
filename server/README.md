@@ -1,21 +1,3 @@
-# Dev
-
-- add remote dep - `go get <link>`
-
-# Migrations
-
-Create migration
-
-```sh
-goose -s create add_some_column sql
-```
-
-Run migrations
-
-```sh
-goose up
-```
-
 # Dev Setup
 
 ```sh
@@ -39,6 +21,20 @@ PGPORT=5432
 GOOSE_DRIVER=postgres
 GOOSE_DBSTRING=postgres://<PGUSER>:<PGPASSWORD>@<PGHOST>:<PGPORT>/<PGDATABASE>?sslmode=disable
 GOOSE_MIGRATION_DIR=./sql/migrations
+```
+
+# Migrations
+
+Create migration
+
+```sh
+goose -s create add_some_column sql
+```
+
+Run migrations
+
+```sh
+goose up
 ```
 
 # Testing
