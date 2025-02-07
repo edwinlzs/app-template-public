@@ -1,0 +1,16 @@
+
+set dotenv-load
+
+# Creates required extensions
+setup-server-db:
+    export PGPASSWORD=$PGPASSWORD
+    podman exec $PGDATABASE psql -h $PGHOST -d $PGDATABASE -U $PGUSER -p $PGPORT -c 'CREATE EXTENSION IF NOT EXISTS "pgcrypto";'
+
+run-server:
+  go run *.go
+
+test-all:
+  go test -v ./...
+  
+test-all-cover:
+  go test -v ./... -cover

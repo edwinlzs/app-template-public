@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:17.2-alpine3.21
+    restart: unless-stopped
+    container_name: templatedb
+    environment:
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "${PGPORT}:5432"
+ 
+volumes:
+  pgdata:
