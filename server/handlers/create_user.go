@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
-	"server/db"
 	"server/handlers/utils"
+	"server/models"
 )
 
 type CreateUserPayload struct {
@@ -39,10 +39,10 @@ func CreateUser(env utils.ServerEnv, w http.ResponseWriter, r *http.Request) err
 		return utils.StatusError{Code: 400, Err: errors.New("empty user alias or email")}
 	}
 
-	ctx := r.Context()
-	user, err := env.GetQueries().CreateUser(ctx, db.CreateUserParams{ID: userId, Alias: alias, Email: email})
-	if err != nil {
-		slog.Warn(fmt.Sprintf("Failed to create user: %s", err))
+	user := models.User{ID: userId, Alias: alias, Email: email}
+	result := env.GetDB().Create(user)
+	if result.Error != nil {
+		slog.Warn(fmt.Sprintf("Failed to create user: %s", result.Error))
 		return utils.StatusError{Code: 500, Err: errors.New("failed to create user")}
 	}
 

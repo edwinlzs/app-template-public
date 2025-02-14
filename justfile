@@ -1,5 +1,5 @@
 start-infra:
-  cd ./infra && podman compose up --detach
+  cd ./infra && docker compose up --detach
 
 stop-infra:
-  cd ./infra && podman compose stop
+  cd ./infra && docker compose stop

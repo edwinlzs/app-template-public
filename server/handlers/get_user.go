@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"net/http"
 	"server/handlers/utils"
+	"server/models"
 )
 
 // Retrieves user data
@@ -22,9 +23,9 @@ func GetUser(env utils.ServerEnv, w http.ResponseWriter, r *http.Request) error 
 		return err
 	}
 
-	ctx := r.Context()
-	user, err := env.GetQueries().GetUser(ctx, userId)
-	if err != nil {
+	var user models.User
+	result := env.GetDB().First(&user, userId)
+	if result.RowsAffected == 0 {
 		slog.Warn(fmt.Sprintf("User not found: %s", err))
 		return utils.StatusError{Code: 404, Err: errors.New("failed to get user")}
 	}

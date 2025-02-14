@@ -7,11 +7,12 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"gorm.io/gorm"
 )
 
 type mockEnv struct{}
 
-func (m *mockEnv) GetQueries() DbQueries {
+func (m *mockEnv) GetDB() *gorm.DB {
 	return nil
 }
 

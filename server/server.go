@@ -1,19 +1,18 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"log/slog"
 	"net/http"
 	"os"
 	"server/auth"
-	"server/db"
 	"server/handlers"
 	handlersUtils "server/handlers/utils"
 
-	"github.com/jackc/pgx/v5"
 	"github.com/joho/godotenv"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -31,17 +30,17 @@ func main() {
 	dbPass := os.Getenv("PGPASSWORD")
 	dbHost := os.Getenv("PGHOST")
 	dbPort := os.Getenv("PGPORT")
-	dbConnUri := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", dbUser, dbPass, dbHost, dbPort, dbName)
-	ctx := context.Background()
-	conn, err := pgx.Connect(ctx, dbConnUri)
+
+	db, err := gorm.Open(postgres.New(postgres.Config{
+		DSN:                  fmt.Sprintf("postgres://%s:%s@%s:%s/%s", dbUser, dbPass, dbHost, dbPort, dbName),
+		PreferSimpleProtocol: true, // disables implicit prepared statement usage
+	}), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Error connecting to DB")
 	}
-	defer conn.Close(context.Background())
-	queries := db.New(conn)
 
 	// init server env
-	env := &handlersUtils.Env{Queries: queries, Auth: auth}
+	env := &handlersUtils.Env{DB: db, Auth: auth}
 
 	// authenticated routes
 	authMux := http.NewServeMux()

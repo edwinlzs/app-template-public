@@ -23,19 +23,13 @@ GOOSE_DBSTRING=postgres://<PGUSER>:<PGPASSWORD>@<PGHOST>:<PGPORT>/<PGDATABASE>?s
 GOOSE_MIGRATION_DIR=./sql/migrations
 ```
 
-# Migrations
+# GORM
 
-Create migration
-
-```sh
-goose -s create add_some_column sql
-```
-
-Run migrations
-
-```sh
-goose up
-```
+- Pointers (`*string`) indicate nullable fields
+- GORM auto handles `CreatedAt` and `UpdatedAt` fields
+- embed `gorm.Model` to include commonly used fields
+- ID is default primary key for a model
+- `User` becomes `users` table in db
 
 # Testing
 

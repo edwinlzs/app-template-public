@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"server/auth"
 
-	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/google/uuid"
 )
 
 func GetUserContext(r *http.Request) (map[string]string, error) {
@@ -21,8 +21,8 @@ func GetUserContext(r *http.Request) (map[string]string, error) {
 }
 
 // Extracts user ID from request context
-func GetUserId(userContext map[string]string) (pgtype.UUID, error) {
-	var userId pgtype.UUID
+func GetUserId(userContext map[string]string) (uuid.UUID, error) {
+	var userId uuid.UUID
 	err := (userId).Scan(userContext["id"])
 	if err != nil {
 		slog.Warn(fmt.Sprintf("UserId: %s is not a valid UUID", userContext["id"]))

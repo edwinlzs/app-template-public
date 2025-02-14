@@ -1,28 +1,21 @@
 package utils
 
 import (
-	"context"
 	"server/auth"
-	"server/db"
 
-	"github.com/jackc/pgx/v5/pgtype"
+	"gorm.io/gorm"
 )
 
 type ServerEnv interface {
-	GetQueries() DbQueries
-}
-
-type DbQueries interface {
-	GetUser(ctx context.Context, id pgtype.UUID) (db.User, error)
-	CreateUser(ctx context.Context, params db.CreateUserParams) (db.User, error)
+	GetDB() *gorm.DB
 }
 
 // App-wide server environment
 type Env struct {
-	Queries *db.Queries
+	*gorm.DB
 	auth.Auth
 }
 
-func (e *Env) GetQueries() DbQueries {
-	return e.Queries
+func (e *Env) GetDB() *gorm.DB {
+	return e.DB
 }

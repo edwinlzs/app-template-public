@@ -7,7 +7,6 @@ import (
 	"errors"
 	"net/http/httptest"
 	"server/auth"
-	"server/db"
 	"server/handlers/utils"
 	"testing"
 
@@ -20,7 +19,7 @@ func TestCreateUser(t *testing.T) {
 		payloadBytes, _ := json.Marshal(payload)
 		w, r := httptest.NewRecorder(), httptest.NewRequest("POST", "/user", bytes.NewBuffer(payloadBytes))
 		testUserId, testUserIdStr := MockUuid()
-		env := &MockedEnv{Queries: new(MockedQueries)}
+		env := &MockedEnv{DB: new(MockedQueries)}
 
 		expectedUser := db.User{
 			ID:    testUserId,
