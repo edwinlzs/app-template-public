@@ -40,7 +40,7 @@ func CreateUser(env utils.ServerEnv, w http.ResponseWriter, r *http.Request) err
 	}
 
 	user := models.User{ID: userId, Alias: alias, Email: email}
-	result := env.GetDB().Create(user)
+	result := env.GetDB().Create(&user)
 	if result.Error != nil {
 		slog.Warn(fmt.Sprintf("Failed to create user: %s", result.Error))
 		return utils.StatusError{Code: 500, Err: errors.New("failed to create user")}

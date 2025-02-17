@@ -19,6 +19,7 @@ export async function login(formData: FormData) {
 
   if (error) {
     // TODO: Handle error
+    console.error("Error logging in: ", error);
     redirect("/error");
   }
 
@@ -40,6 +41,7 @@ export async function signup(formData: FormData) {
 
   if (error) {
     // TODO: Handle error
+    console.error("Error signing up: ", error);
     redirect("/error");
   }
 

@@ -9,6 +9,7 @@ import (
 	"server/auth"
 	"server/handlers"
 	handlersUtils "server/handlers/utils"
+	"server/models"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -38,6 +39,9 @@ func main() {
 	if err != nil {
 		log.Fatal("Error connecting to DB")
 	}
+
+	// Migrate the schema
+	db.AutoMigrate(&models.User{})
 
 	// init server env
 	env := &handlersUtils.Env{DB: db, Auth: auth}
