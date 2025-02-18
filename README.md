@@ -1,6 +1,6 @@
-### Setup
+## Setup
 
-### Install `pnpm`
+### Install `pnpm` (or `npm`)
 
 ### Install `go`
 
@@ -13,3 +13,26 @@ PATH=$PATH:$GOPATH/bin
 #### Install `just`
 
 https://github.com/casey/just?tab=readme-ov-file#installation
+
+## Start App
+
+### Run containers
+
+```sh
+just start-infra
+```
+
+### Start backend
+
+```sh
+cd server
+just run-server
+```
+
+### Start frontend
+
+```sh
+cd client-web
+pnpm install
+pnpm dev
+```
