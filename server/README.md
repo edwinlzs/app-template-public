@@ -1,10 +1,6 @@
 # Dev Setup
 
-```sh
-
-```
-
-# `.env` file
+### `.env` file
 
 ```sh
 # AUTH
@@ -16,11 +12,6 @@ PGPASSWORD=...
 PGDATABASE=...
 PGHOST=localhost
 PGPORT=5432
-
-# DB MIGRATIONS
-GOOSE_DRIVER=postgres
-GOOSE_DBSTRING=postgres://<PGUSER>:<PGPASSWORD>@<PGHOST>:<PGPORT>/<PGDATABASE>?sslmode=disable
-GOOSE_MIGRATION_DIR=./sql/migrations
 ```
 
 # GORM
